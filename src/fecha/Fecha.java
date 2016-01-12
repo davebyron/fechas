@@ -26,7 +26,7 @@ public class Fecha {
      */
     public Fecha() {
     }
- 
+    
     /////////////////////GETS Y SETS////////////////////////////
     /**
      * @return the dia
@@ -141,5 +141,16 @@ public class Fecha {
             }//mes no menor q 1 o mayor q 12
         }//año no menor que 0
         return resultado;
+    }
+    
+    public int calcularNumeroDeOrden(){
+        int orden=0;
+        int []diasMes={31,28,31,30,31,30,31,31,30,31,30,31};
+        diasMes[1]=bisiesto();
+        for(int m=0; m<mes-1; m++){
+            orden=orden+diasMes[m];
+            orden=orden+dia;    
+        }
+        return dia;
     }
 }
