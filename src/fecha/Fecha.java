@@ -283,6 +283,11 @@ public class Fecha {
         return diasDesdeFecha;
     }
 
+private void visualizaralgo(){
+int percebes;
+}
 }//fin clase fecha
+
+
 
 
