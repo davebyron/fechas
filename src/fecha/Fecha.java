@@ -131,7 +131,8 @@ public class Fecha {
             resultado = false;
         }//año menor que 0
         else//año no menor que 0
-         if (m < 1 || m > 12) {//mes menor q 1 o mayor q 12
+        {
+            if (m < 1 || m > 12) {//mes menor q 1 o mayor q 12
                 resultado = false;
             }//mes menor q 1 o mayor q 12
             else {//mes no menor q 1 o mayor q 12
@@ -142,9 +143,13 @@ public class Fecha {
                     resultado = false;
                 }//dia menor q 1 o mayor q los dias guardados en ese mes
             }//mes no menor q 1 o mayor q 12//año no menor que 0
+        }
         return resultado;
     }
-
+/**
+ * Metodo para calcular los dias que han pasado desde el inicio del año a partir de una fecha
+ * @return 
+ */
     public int calcularNumeroDeOrden() {
         int orden = 0;
         int[] diasMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -153,17 +158,19 @@ public class Fecha {
             orden = orden + diasMes[m];
             orden = orden + dia;
         }
-        return dia;
+        return orden;
     }
 
     /*
-    METODO DESCONOCIDO
     public int diasFinAnno(){
     int dias;
     dias=diasAnno()-calcularNumeroOrden();
     return dias;
     }
      */
+    
+    
+    
     /**
      * Método para comparar las fechas introducidas
      *
@@ -212,26 +219,28 @@ public class Fecha {
                     dias = dias + diasMes[m];//se suma los días que teníamos anteriormente a los dias del los meses que quedan-
                     m++;//se va sumando una con cada mes que hay entre las fechas.
                 }//fin while m<fecha2.getMes()-1
-            }
-            dias = dias + fecha2.getDia();
+                 dias = dias + fecha2.getDia();
 
-        } 
-        else {
-            dias=diasQuedanAnno();
-            while(a<fecha2.getAnno()){
-            dias=annoBisiesto(a)+dias;
-            a++;
             }
-            dias=dias+diasPasanAnno();
+           
+        } else {
+            dias = diasQuedanAnno();
+            while (a < fecha2.getAnno()) {
+                dias = annoBisiesto(a) + dias;
+                a++;
+            }
+            dias = dias + diasPasanAnno();
         }
         return dias;
     }
-/**
- * Método para comprobar si el año que metemos es bisiesto, como por 
- * ejemplo el 2016.
- * @param a
- * @return dias
- */
+
+    /**
+     * Método para comprobar si el año que metemos es bisiesto, como por ejemplo
+     * el 2016.
+     *
+     * @param a
+     * @return dias
+     */
     public int annoBisiesto(int a) {
         int dias = 365;
         if ((a % 4 == 0 && a % 100 != 0) || a % 400 == 0) {
@@ -247,10 +256,12 @@ public class Fecha {
         }
         return dias;
     }
-/**
- * Método para saber los días de quedan del año , a partir de la fecha.
- * @return 
- */
+
+    /**
+     * Método para saber los días de quedan del año , a partir de la fecha.
+     *
+     * @return
+     */
     public int diasPasanAnno() {//metodo diaspasanAno
         int diasHastaFecha = 0;//vble para acumular los dias que han pasado
         int mes;//vble para ir recorriendo los meses
@@ -265,16 +276,16 @@ public class Fecha {
         return diasHastaFecha;
     }//fin metodo diaspasanAnno
 
-    
     /**
-     * Método de los días que quedan del año, a partir de la fecha que
-     * hemos introducido.
-     * @return 
+     * Método de los días que quedan del año, a partir de la fecha que hemos
+     * introducido.
+     *
+     * @return
      */
     public int diasQuedanAnno() {
         int diasDesdeFecha = 0;
         int mes;
-         int[] diasMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        int[] diasMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         diasMes[1] = bisiesto(anno);
         diasDesdeFecha = diasMes[this.mes - 1] - dia;
         for (mes = this.mes + 1; mes <= 12; mes++) {
@@ -282,12 +293,44 @@ public class Fecha {
         }
         return diasDesdeFecha;
     }
+    ////////////////////////////////////////////
 
-private void visualizaralgo(){
-int percebes;
-}
+   /**
+    * Método para controlar los días de vencimiento.
+    * @param fecha2
+    * @return 
+    */
+    public int diasVencimiento(Fecha fecha1) {
+      int dias;
+        int m = mes;
+        int a = anno + 1;
+        dias = 0;
+        
+        if (anno == fecha1.getAnno()) {
+            if (mes == fecha1.getMes()) {
+                dias = fecha1.getDia() + dia;
+            } else {
+                int[] diasMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; //dias mes desde el array.   
+                dias = diasMes[mes + 1] + dia;//contamos los días que tiene el mes, menos el día introducido. 
+                while (m < fecha1.getMes() +1 ) { //while: mientras que el mes sea menor que el mes introducido.
+                    dias = dias - diasMes[m];//se suma los días que teníamos anteriormente a los dias del los meses que quedan-
+                    m++;//se va sumando una con cada mes que hay entre las fechas.
+                }//fin while m<fecha2.getMes()-1
+                 dias = dias + fecha1.getDia();
+
+            }
+           
+        } else {
+            dias = diasQuedanAnno();
+            while (a < fecha1.getAnno()) {
+                dias = annoBisiesto(a) + dias;
+                a++;
+            }
+            dias = dias + diasPasanAnno();
+        }
+        return dias;
+    }
+        
+
 }//fin clase fecha
-
-
-
 
