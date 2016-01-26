@@ -330,6 +330,11 @@ public class Fecha {
         }
         return dias;
     }
+    
+    
+    public void metodo(){
+    System.out.println("version 1.1");
+    }
         
 
 }//fin clase fecha
